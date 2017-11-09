@@ -64,3 +64,50 @@ const findOutlier = function(integers){
   let even = integers.filter(x => x % 2 == 0);
   return even.length > odd.length ? odd[0] : even[0];
 };
+
+/////////Which are in??/////Given two arrays of strings a1 and a2 return a sorted array r in lexicographical order of the strings of a1 which are substrings of strings of a2.
+function inArray(array1,array2){
+  let r = [];
+  for (let i = 0; i < array1.length; i++) {
+      for (let j = 0; j < array2.length; j++) {
+      	//String.prototype.includes() compare if given string contains substring, String.prototype.match() also works
+        if (array2[j].includes(array1[i]) == true) {
+          r.push(array1[i]);
+          break;
+        }
+    }
+  }
+  return r.sort();
+}
+////////shorter solution
+function inArray2(array1,array2){
+  return array1
+    .filter(a1 => array2.find(a2 => a2.includes(a1)))
+    .sort()
+}
+
+console.log(inArray2(["ups", "mad", "ba"], ["upsy", "ball", "madness"]));
+///////// find number which is equal to its digpow like 89 = 8^1 + 9^2
+function sumDigPow(a, b) {
+return Array(b-a).fill() //fill array with given range using fill() and map()
+  .map((_, i) => i + a)
+  .filter(function (x) {
+   	return x > 9 ? 
+   	x.toString()
+   	.split("")
+   	.reduce((a, b, i) => +a + Math.pow(b, i+1)) == x //+a convert it into number 
+   	: Math.pow(x, 1) == x;
+  });
+}
+
+console.log(sumDigPow(1, 200));
+//////////My favorite answer
+// function sumDigPow2(a, b) {
+//   var ans = [];
+//   while(a <= b){
+//     if(a.toString().split('').reduce((x,y,i)=>x + +y ** (i + 1),0) == a)
+//       ans.push(a);
+//     a++;
+//   }
+//   return ans;
+// }
